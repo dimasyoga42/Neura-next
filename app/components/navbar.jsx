@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 
 const Navbar = ({ session }) => {
   return (
-    <div className="w-full h-16 flex items-center justify-between">
+    <div className="w-full h-16 flex items-center justify-between bg-white text-black">
       <h1 className="font-extrabold ml-2">Neura Sama</h1>
 
       {session ? (

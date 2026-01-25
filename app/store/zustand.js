@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabase";
 export const usePostStore = create((set) => ({
   xtall: [],
   banner: [],
+  bos: [],
   editXtall: null,
   loading: false,
   error: null,
@@ -117,6 +118,75 @@ export const usePostStore = create((set) => ({
         loading: false
       });
     }
+  },
+  featchBos: async () => {
+    set({ loading: true, error: null });
+    const { data, error } = await supabase.from("bosdef").select("*");
+    if (error) {
+      set({ error: error.message, loading: false });
+      return;
+    }
+    set({ bos: data, loading: false });
+  },
+  searchBos: async (q) => {
+    set({ loading: true, error: null });
+    const { data, error } = await supabase.from("bosdef").select("*").ilike("name", `%${q}%`);
+    if (error) {
+      set({ error: error.message, loading: false });
+      return;
+    }
+    set({ bos: data, loading: false });
+  },
+  insertBos: async (name, type, image_url, spawn, element, stat) => {
+    set({ loading: true, error: null });
+    const { data, error } = await supabase
+      .from("bosdef")
+      .insert([{ name, type, image_url, spawn, element, stat }])
+      .select()
+      .single();
+    if (error) {
+      set({ error: error.message, loading: false });
+      return;
+    }
+    set((state) => ({
+      bos: [...state.bos, data],
+      loading: false
+    }));
+  },
+  editBos: async (id, name, type, image_url, spawn, element, stat) => {
+    set({ loading: true, error: null, success: null });
+    const { data, error } = await supabase
+      .from("bosdef")
+      .update({ name, type, image_url, spawn, element, stat })
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) {
+      set({ error: error.message, loading: false });
+      return;
+    }
+    // update state lokal
+    set((state) => ({
+      bos: state.bos.map((item) =>
+        item.id === id ? data : item
+      ),
+      loading: false,
+      success: "Berhasil di edit"
+    }));
+  },
+  deleteBos: async (id) => {
+    set({ loading: true, error: null });
+    const { error } = await supabase
+      .from("bosdef")
+      .delete()
+      .eq("id", id);
+    if (error) {
+      set({ error: error.message, loading: false });
+      return;
+    }
+    set((state) => ({
+      bos: state.bos.filter((item) => item.id !== id),
+      loading: false
+    }));
   }
-
 }));
