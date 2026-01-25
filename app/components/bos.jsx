@@ -74,10 +74,10 @@ const Bospage = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button className="btn btn-primary" onClick={handleSearch}>search</button>
-          <button className="btn btn-warning" onClick={() => document.getElementById('tambah_modal_1').showModal()}>tambah</button>
+          <button className="btn bg-sky-500 text-white" onClick={handleSearch}>search</button>
+          <button className="btn bg-yellow-500 text-white" onClick={() => document.getElementById('tambah_modal_1').showModal()}>tambah</button>
           <dialog id="tambah_modal_1" className="modal">
-            <div className="modal-box">
+            <div className="modal-box bg-white">
               <h3 className="font-bold text-lg text-center mb-4">
                 TAMBAHKAN BOS
               </h3>
@@ -85,7 +85,7 @@ const Bospage = () => {
               <div className="flex flex-col gap-2 w-full">
                 <input
                   type="text"
-                  className="input mx-auto"
+                  className="input mx-auto border"
                   placeholder="Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -93,7 +93,7 @@ const Bospage = () => {
                 />
                 <input
                   type="text"
-                  className="input mx-auto"
+                  className="input mx-auto border"
                   placeholder="Type"
                   value={type}
                   onChange={(e) => setType(e.target.value)}
@@ -101,7 +101,7 @@ const Bospage = () => {
                 />
                 <input
                   type="text"
-                  className="input mx-auto"
+                  className="input mx-auto border"
                   placeholder="image"
                   value={image}
                   onChange={(e) => setImage(e.target.value)}
@@ -109,7 +109,7 @@ const Bospage = () => {
                 />
                 <input
                   type="text"
-                  className="input mx-auto"
+                  className="input mx-auto border"
                   placeholder="spawn"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
@@ -117,7 +117,7 @@ const Bospage = () => {
                 />
                 <input
                   type="text"
-                  className="input mx-auto"
+                  className="input mx-auto border"
                   placeholder="element"
                   value={element}
                   onChange={(e) => setElement(e.target.value)}
@@ -125,7 +125,7 @@ const Bospage = () => {
                 />
                 <textarea
                   type="text"
-                  className="input mx-auto"
+                  className="textarea p-10 mx-auto  border"
                   placeholder="stat"
                   value={stat}
                   onChange={(e) => setStat(e.target.value)}
@@ -182,9 +182,9 @@ const Bospage = () => {
                 </p>
               )}
               <div className="flex gap-2">
-                <button className="btn btn-primary" onClick={() => editModal(item)}>Edit</button>
+                <button className="btn bg-sky-500 text-white" onClick={() => editModal(item)}>Edit</button>
                 <dialog id="my_modal_bos" className="modal">
-                  <div className="modal-box flex justify-center justify-items-center items-centerw-full mx-auto">
+                  <div className="modal-box bg-white flex justify-center justify-items-center items-centerw-full mx-auto">
                     <div className="modal-action">
                       <form method="dialog">
                         <div className=" w-full mx-auto flex justify-center flex-col gap-2">
@@ -193,7 +193,7 @@ const Bospage = () => {
                           </h3>
                           <input
                             type="text"
-                            className="input mx-auto"
+                            className="input mx-auto border"
                             placeholder="Name"
                             value={editName}
                             onChange={(e) => setEditName(e.target.value)}
@@ -201,7 +201,7 @@ const Bospage = () => {
                           />
                           <input
                             type="text"
-                            className="input mx-auto"
+                            className="input mx-auto border"
                             placeholder="Type"
                             value={editType}
                             onChange={(e) => setEditType(e.target.value)}
@@ -209,7 +209,7 @@ const Bospage = () => {
                           />
                           <input
                             type="text"
-                            className="input mx-auto"
+                            className="input mx-auto border"
                             placeholder="image"
                             value={editImage}
                             onChange={(e) => setEditImage(e.target.value)}
@@ -217,7 +217,7 @@ const Bospage = () => {
                           />
                           <input
                             type="text"
-                            className="input mx-auto"
+                            className="input mx-auto border"
                             placeholder="spawn"
                             value={editLocation}
                             onChange={(e) => setEditLocation(e.target.value)}
@@ -225,7 +225,7 @@ const Bospage = () => {
                           />
                           <input
                             type="text"
-                            className="input mx-auto"
+                            className="input mx-auto border"
                             placeholder="element"
                             value={editElement}
                             onChange={(e) => setEditElement(e.target.value)}
@@ -233,19 +233,19 @@ const Bospage = () => {
                           />
                           <textarea
                             type="text"
-                            className="textarea p-10"
+                            className="textarea p-10 border"
                             placeholder="stat"
                             value={editStat}
                             onChange={(e) => setEditStat(e.target.value)}
                             required
                           />
-                          <button className="btn btn-primary m-auto mx-auto" onClick={handleEdit}>update</button>
+                          <button className="btn bg-sky-500 text-white m-auto mx-auto" onClick={handleEdit}>update</button>
                         </div>
                       </form>
                     </div>
                   </div>
                 </dialog>
-                <button className="btn btn-secondary" onClick={() => handleDelete(item.id)}>Hapus</button>
+                <button className="btn bg-yellow-500 text-white" onClick={() => handleDelete(item.id)}>Hapus</button>
               </div>
               <div className="collapse collapse-arrow join-item">
                 <input type="radio" name="my-accordion-4" defaultChecked />

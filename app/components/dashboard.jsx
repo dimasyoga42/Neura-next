@@ -4,26 +4,38 @@ import Navbar from "../components/navbar";
 import { usePostStore } from "../store/zustand";
 
 export default function Crud() {
-  const { xtall = [], fetchData, loading, error, editXtall, searchData, deleteData, inputxtall } = usePostStore();
+  const {
+    xtall = [],
+    fetchData,
+    loading,
+    error,
+    editXtall,
+    searchData,
+    deleteData,
+    inputxtall
+  } = usePostStore();
 
+  // Edit state
   const [selectedId, setSelectedId] = useState(null);
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [stat, setStat] = useState("");
   const [route, setRoute] = useState("");
-  const [search, setSearch] = useState("");
-  const [id, setId] = useState(null);
 
-  //input xtall
-  const [inputname, setinputName] = useState("");
-  const [inputtype, setinputType] = useState("");
-  const [inputstat, setinputStat] = useState("");
-  const [inputroute, setinputRoute] = useState("");
+  // Search state
+  const [search, setSearch] = useState("");
+
+  // Insert state
+  const [inputName, setInputName] = useState("");
+  const [inputType, setInputType] = useState("");
+  const [inputStat, setInputStat] = useState("");
+  const [inputRoute, setInputRoute] = useState("");
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
 
-  const openModal = (item) => {
+  const openEditModal = (item) => {
     setSelectedId(item.id);
     setName(item.name);
     setType(item.type);
@@ -32,13 +44,36 @@ export default function Crud() {
     document.getElementById("edit_modal").showModal();
   };
 
-  const handleSubmit = async () => {
+  const handleEdit = async () => {
     await editXtall(selectedId, name, type, stat, route);
     document.getElementById("edit_modal").close();
   };
+
   const handleSearch = async () => {
     await searchData(search);
-  }
+  };
+
+  const handleDelete = async (id) => {
+    await deleteData(id);
+  };
+
+  const openInsertModal = () => {
+    setInputName("");
+    setInputType("");
+    setInputStat("");
+    setInputRoute("");
+    document.getElementById("insert_modal").showModal();
+  };
+
+  const handleInsert = async () => {
+    await inputxtall(inputName, inputType, inputStat, inputRoute);
+    document.getElementById("insert_modal").close();
+  };
+
+  const closeModal = (modalId) => {
+    document.getElementById(modalId).close();
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -46,9 +81,7 @@ export default function Crud() {
       </div>
     );
   }
-  const handleDelete = async (id) => {
-    await deleteData(id);
-  }
+
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -56,13 +89,10 @@ export default function Crud() {
       </div>
     );
   }
-  const handleInsert = async () => {
-    await inputxtall(inputname, inputtype, inputstat, inputroute);
-    document.getElementById('tambah_modal_1').close();
-  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Search & Action Bar */}
       <div className="w-full flex justify-end mb-5 gap-2">
         <input
           type="text"
@@ -71,59 +101,15 @@ export default function Crud() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button className="btn btn-primary" onClick={handleSearch}>search</button>
-        <button className="btn btn-primary" onClick={() => document.getElementById('tambah_modal_1').showModal()}>tambah</button>
-        <dialog id="tambah_modal_1" className="modal">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg text-center mb-4">
-              TAMBAHKAN XTAL
-            </h3>
-
-            <div className="flex flex-col gap-2 w-full">
-              <input
-                type="text"
-                className="input mx-auto"
-                placeholder="Name"
-                value={inputname}
-                onChange={(e) => setinputName(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                className="input mx-auto"
-                placeholder="Type"
-                value={inputtype}
-                onChange={(e) => setinputType(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                className="input mx-auto"
-                placeholder="Stat"
-                value={inputstat}
-                onChange={(e) => setinputStat(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                className="input mx-auto"
-                placeholder="Route"
-                value={inputroute}
-                onChange={(e) => setinputRoute(e.target.value)}
-                required
-              />
-            </div>
-
-            <div className="modal-action">
-              <button className="btn btn-primary mx-auto" onClick={handleInsert}>
-                Tambah
-              </button>
-
-            </div>
-          </div>
-        </dialog>
-
+        <button className="btn bg-yellow-500 text-white" onClick={handleSearch}>
+          search
+        </button>
+        <button className="btn bg-sky-500 text-white" onClick={openInsertModal}>
+          tambah
+        </button>
       </div>
+
+      {/* Data Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {xtall.map((item) => (
           <div
@@ -147,13 +133,13 @@ export default function Crud() {
               </div>
 
               <button
-                className="btn btn-sm mt-3"
-                onClick={() => openModal(item)}
+                className="btn bg-sky-500 text-white btn-sm mt-3"
+                onClick={() => openEditModal(item)}
               >
                 Edit
               </button>
               <button
-                className="btn btn-sm mt-3"
+                className="btn bg-yellow-500 text-white btn-sm mt-3"
                 onClick={() => handleDelete(item.id)}
               >
                 delete
@@ -162,8 +148,65 @@ export default function Crud() {
           </div>
         ))}
       </div>
+
+      {/* MODAL INSERT */}
+      <dialog id="insert_modal" className="modal">
+        <div className="modal-box bg-white">
+          <h3 className="font-bold text-lg text-center mb-4">
+            TAMBAHKAN XTAL
+          </h3>
+
+          <div className="flex flex-col gap-2 w-full">
+            <input
+              type="text"
+              className="input mx-auto border"
+              placeholder="Name"
+              value={inputName}
+              onChange={(e) => setInputName(e.target.value)}
+            />
+            <input
+              type="text"
+              className="input mx-auto border"
+              placeholder="Type"
+              value={inputType}
+              onChange={(e) => setInputType(e.target.value)}
+            />
+            <input
+              type="text"
+              className="input mx-auto border"
+              placeholder="Stat"
+              value={inputStat}
+              onChange={(e) => setInputStat(e.target.value)}
+            />
+            <input
+              type="text"
+              className="input mx-auto border"
+              placeholder="Route"
+              value={inputRoute}
+              onChange={(e) => setInputRoute(e.target.value)}
+            />
+          </div>
+
+          <div className="modal-action">
+            <button
+              className="btn bg-gray-500 text-white"
+              onClick={() => closeModal("insert_modal")}
+            >
+              Batal
+            </button>
+            <button
+              className="btn bg-sky-500 text-white"
+              onClick={handleInsert}
+            >
+              Tambah
+            </button>
+          </div>
+        </div>
+      </dialog>
+
+      {/* MODAL EDIT */}
       <dialog id="edit_modal" className="modal">
-        <div className="modal-box">
+        <div className="modal-box bg-white">
           <h3 className="font-bold text-lg text-center mb-4">
             UPDATE XTAL
           </h3>
@@ -171,28 +214,28 @@ export default function Crud() {
           <div className="flex flex-col gap-2 w-full">
             <input
               type="text"
-              className="input mx-auto"
+              className="input mx-auto border"
               placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             <input
               type="text"
-              className="input mx-auto"
+              className="input mx-auto border"
               placeholder="Type"
               value={type}
               onChange={(e) => setType(e.target.value)}
             />
             <input
               type="text"
-              className="input mx-auto"
+              className="input mx-auto border"
               placeholder="Stat"
               value={stat}
               onChange={(e) => setStat(e.target.value)}
             />
             <input
               type="text"
-              className="input mx-auto"
+              className="input mx-auto border"
               placeholder="Route"
               value={route}
               onChange={(e) => setRoute(e.target.value)}
@@ -200,10 +243,18 @@ export default function Crud() {
           </div>
 
           <div className="modal-action">
-            <button className="btn btn-primary mx-auto" onClick={handleSubmit}>
+            <button
+              className="btn bg-gray-500 text-white"
+              onClick={() => closeModal("edit_modal")}
+            >
+              Batal
+            </button>
+            <button
+              className="btn btn-primary"
+              onClick={handleEdit}
+            >
               Save
             </button>
-
           </div>
         </div>
       </dialog>

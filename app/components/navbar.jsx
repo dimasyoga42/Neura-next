@@ -11,7 +11,7 @@ const Navbar = ({ session }) => {
       {session ? (
         <div className="mr-2 flex gap-2 items-center">
           <span>halo {session.user.username}</span>
-          <button onClick={() => signOut()} className="btn btn-sm">
+          <button onClick={() => signOut()} className="btn btn-sm bg-black text-white">
             logout
           </button>
         </div>

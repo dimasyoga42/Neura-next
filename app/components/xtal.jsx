@@ -38,9 +38,9 @@ const Xtallpage = () => {
             <h1 className="text-md font-bold mb-1 uppercase">Xtall Information</h1>
             <p className="text-sm text-gray-500">{xtall.length} items tersedia</p>
           </div>
-          <div className="flex">
+          <div className="flex gap-2">
             <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Search..." className="input bg-transparent border  w-65" />
-            <button onClick={handleSearch} className="btn btn-primary">Search</button>
+            <button onClick={handleSearch} className=" btn bg-sky-500 border-none text-white">Search</button>
           </div>
         </div>
 
