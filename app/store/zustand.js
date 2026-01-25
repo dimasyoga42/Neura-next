@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 
 export const usePostStore = create((set) => ({
   xtall: [],
+  banner: [],
   editXtall: null,
   loading: false,
   error: null,
@@ -106,7 +107,7 @@ export const usePostStore = create((set) => ({
       }
 
       set({
-        xtall: json.data,
+        banner: json.data,
         loading: false
       });
 
