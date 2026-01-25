@@ -33,12 +33,12 @@ const Xtallpage = () => {
     <div className="w-full min-h-screen py-8 px-4">
       <div className="max-w-6xl mx-auto">
 
-        <div className="mb-8 flex gap-2 justify-between">
+        <div className="mb-8 flex  gap-2 flex-col ">
           <div>
             <h1 className="text-md font-bold mb-1 uppercase">Xtall Information</h1>
             <p className="text-sm text-gray-500">{xtall.length} items tersedia</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex">
             <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Search..." className="input bg-transparent border  w-65" />
             <button onClick={handleSearch} className="btn btn-primary">Search</button>
           </div>
