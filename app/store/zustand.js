@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 
 export const usePostStore = create((set) => ({
   xtall: [],
+  editXtall: null,
   loading: false,
   error: null,
 
@@ -20,6 +21,74 @@ export const usePostStore = create((set) => ({
 
     set({ xtall: data, loading: false });
   },
+  searchData: async (q) => {
+    set({ loading: true, error: null });
+    const { data, error } = await supabase
+      .from("xtall")
+      .select("*")
+      .ilike("name", `%${q}%`);
+    if (error) {
+      set({ error: error.message, loading: false });
+      return;
+    }
+    set({ xtall: data, loading: false });
+  },
+  editXtall: async (id, name, type, stat, route) => {
+    set({ loading: true, error: null, success: null });
+
+    const { data, error } = await supabase
+      .from("xtall")
+      .update({ name, type, stat, route })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (error) {
+      set({ error: error.message, loading: false });
+      return;
+    }
+
+    // update state lokal
+    set((state) => ({
+      xtall: state.xtall.map((item) =>
+        item.id === id ? data : item
+      ),
+      loading: false,
+      success: "Berhasil di edit"
+    }));
+  },
+  inputxtall: async (name, type, stat, route) => {
+    set({ loading: true, error: null });
+    const { data, error } = await supabase
+      .from("xtall")
+      .insert([{ name, type, stat, route }])
+      .select()
+      .single();
+    if (error) {
+      set({ error: error.message, loading: false });
+      return;
+    }
+    set((state) => ({
+      xtall: [...state.xtall, data],
+      loading: false
+    }));
+  },
+  deleteData: async (id) => {
+    set({ loading: true, error: null });
+    const { error } = await supabase
+      .from("xtall")
+      .delete()
+      .eq("id", id);
+    if (error) {
+      set({ error: error.message, loading: false });
+      return;
+    }
+    set((state) => ({
+      xtall: state.xtall.filter((item) => item.id !== id),
+      loading: false
+    }));
+  },
+
   fetchBanner: async () => {
     set({ loading: true, error: null });
 
