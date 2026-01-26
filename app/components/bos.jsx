@@ -69,15 +69,15 @@ const Bospage = () => {
         <div className="flex gap-2 mr-5">
           <input
             type="text"
-            className="input ml-2 bg-transparent border border-black text-black"
+            className="input ml-2 bg-transparent border"
             placeholder="search"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <button className="btn bg-sky-500 text-white" onClick={handleSearch}>search</button>
-          <button className="btn bg-yellow-500 text-white" onClick={() => document.getElementById('tambah_modal_1').showModal()}>tambah</button>
+          <button className="btn btn-primary" onClick={handleSearch}>search</button>
+          <button className="btn btn-warning" onClick={() => document.getElementById('tambah_modal_1').showModal()}>tambah</button>
           <dialog id="tambah_modal_1" className="modal">
-            <div className="modal-box bg-white">
+            <div className="modal-box">
               <h3 className="font-bold text-lg text-center mb-4">
                 TAMBAHKAN BOS
               </h3>
@@ -144,7 +144,7 @@ const Bospage = () => {
           </dialog>
         </div>
       </div>
-      <div className="w-full mx-auto py-8 px-4 space-y-4 flex flex-wrap gap-2 justify-center bg-white">
+      <div className="w-full mx-auto py-8 px-4 space-y-4 flex flex-wrap gap-2 justify-center">
         {bos.map((item, i) => (
           <div
             key={item.id || i}
@@ -165,26 +165,26 @@ const Bospage = () => {
               </h3>
 
               {item.type && (
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-200">
                   <span className="font-medium">Type:</span> {item.type}
                 </p>
               )}
 
               {item.spawn && (
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-200">
                   <span className="font-medium">Location:</span> {item.spawn}
                 </p>
               )}
 
               {item.element && (
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-200">
                   <span className="font-medium">Element:</span> {item.element}
                 </p>
               )}
               <div className="flex gap-2">
-                <button className="btn bg-sky-500 text-white" onClick={() => editModal(item)}>Edit</button>
+                <button className="btn btn-primary text-white" onClick={() => editModal(item)}>Edit</button>
                 <dialog id="my_modal_bos" className="modal">
-                  <div className="modal-box bg-white flex justify-center justify-items-center items-centerw-full mx-auto">
+                  <div className="modal-box  flex justify-center justify-items-center items-centerw-full mx-auto">
                     <div className="modal-action">
                       <form method="dialog">
                         <div className=" w-full mx-auto flex justify-center flex-col gap-2">
@@ -239,20 +239,20 @@ const Bospage = () => {
                             onChange={(e) => setEditStat(e.target.value)}
                             required
                           />
-                          <button className="btn bg-sky-500 text-white m-auto mx-auto" onClick={handleEdit}>update</button>
+                          <button className="btn btn-primary text-white m-auto mx-auto" onClick={handleEdit}>update</button>
                         </div>
                       </form>
                     </div>
                   </div>
                 </dialog>
-                <button className="btn bg-yellow-500 text-white" onClick={() => handleDelete(item.id)}>Hapus</button>
+                <button className="btn btn-warning" onClick={() => handleDelete(item.id)}>Hapus</button>
               </div>
               <div className="collapse collapse-arrow join-item">
                 <input type="radio" name="my-accordion-4" defaultChecked />
-                <div className="collapse-title font-semibold text-sky-500">Stat Information</div>
+                <div className="collapse-title font-semibold text-sky-600">Stat Information</div>
                 <div className="collapse-content text-sm">
                   {item.stat && (
-                    <p className="text-sm text-gray-600 whitespace-pre-line">
+                    <p className="text-sm text-gray-200 whitespace-pre-line">
                       <span className="font-medium">Stat:</span>{" "}
                       {item.stat.replaceAll(";", "\n")}
                     </p>

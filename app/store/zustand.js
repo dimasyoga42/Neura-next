@@ -5,9 +5,11 @@ export const usePostStore = create((set) => ({
   xtall: [],
   banner: [],
   bos: [],
+  appview: [],
   editXtall: null,
   loading: false,
   error: null,
+  success: null,
 
   fetchData: async () => {
     set({ loading: true, error: null });
@@ -187,6 +189,59 @@ export const usePostStore = create((set) => ({
     set((state) => ({
       bos: state.bos.filter((item) => item.id !== id),
       loading: false
+    }));
+  },
+  fetchAppview: async () => {
+    set({ loading: true, error: null });
+    const { data, error } = await supabase.from("appview").select("*");
+    if (error) return set({ error: error.message, loading: false });
+    set({ appview: data, loading: false });
+  },
+  searchAppview: async (query) => {
+    set({ loading: true, error: null });
+    const { data, error } = await supabase.from("appview").select("*").ilike("name", `%${query}%`);
+    if (error) return set({ error: error.message, loading: false });
+    set({ appview: data, loading: false });
+  },
+  deleteAppview: async (id) => {
+    set({ loading: true, error: null, success: null });
+    const { error } = await supabase.from("appview").delete().eq("id", id);
+    if (error) return set({ error: error.message, loading: false });
+    set((state) => ({
+      appview: state.appview.filter((item) => item.id !== id),
+      loading: false,
+      success: "Berhasil di hapus"
+    }));
+  },
+  insertAppview: async (name, image_url) => {
+    set({ loading: true, error: null });
+    const { data, error } = await supabase
+      .from("appview")
+      .insert([{ name, image_url }])
+      .select()
+      .single();
+    if (error) return set({ error: error.message, loading: false });
+    set((state) => ({
+      appview: [...state.appview, data],
+      loading: false
+    }));
+  },
+  updateAppview: async (id, name, image_url) => {
+    set({ loading: true, error: null, success: null });
+    const { data, error } = await supabase
+      .from("appview")
+      .update({ name, image_url })
+      .eq("id", id)
+      .select()
+      .single();
+    if (error) return set({ error: error.message, loading: false });
+    // update state lokal
+    set((state) => ({
+      appview: state.appview.map((item) =>
+        item.id === id ? data : item
+      ),
+      loading: false,
+      success: "Berhasil di edit"
     }));
   }
 }));

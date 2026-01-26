@@ -9,7 +9,7 @@ export default async function Bos() {
   const season = await getServerSession(authOptions);
   if (!season) redirect("/login");
   return (
-    <div className="w-full bg-white">
+    <div className="w-full">
       <Navbar session={season} />
       <Bospage />
     </div>
