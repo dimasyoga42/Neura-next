@@ -111,7 +111,7 @@ const Bospages = () => {
               )}
               <button type="submit" className="text-white" onClick={() => hendleDetail(item.id)}>detail</button>
               <dialog id="my_modal_4" className="modal bg-[#0f141a]">
-                <div className="modal-box w-11/12 max-w-5xl">
+                <div className="modal-box w-11/12 max-w-5xl bg-[#0f141a]">
                   <h3 className="font-bold text-lg py-2">Bos detail</h3>
                   <div className=" w-full h-full">
                     <div className="flex justify-center">
