@@ -1,10 +1,12 @@
 import { create } from "zustand";
 import { supabase } from "../lib/supabase";
 
+
 export const usePostStore = create((set) => ({
   xtall: [],
   banner: [],
   bos: [],
+  bosId: [],
   appview: [],
   editXtall: null,
   loading: false,
@@ -190,6 +192,11 @@ export const usePostStore = create((set) => ({
       bos: state.bos.filter((item) => item.id !== id),
       loading: false
     }));
+  },
+  searchByidBos: async (id) => {
+    set({ error: null })
+    const { data, error } = await supabase.from("bosdef").select("*").eq("id", id).select().single();
+    set({ bosId: data })
   },
   fetchAppview: async () => {
     set({ loading: true, error: null });
