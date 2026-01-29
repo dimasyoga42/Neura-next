@@ -4,7 +4,7 @@ import Link from "next/link"
 const Navhome = () => {
   return (
     <>
-      <div className="w-full h-16 flex justify-between justify-items-center items-center">
+      <div className="w-full h-16 flex justify-between justify-items-center items-center text-white">
         <div className="">
           <h1 className="font-extrabold ml-2">Neura Sama</h1>
         </div>
