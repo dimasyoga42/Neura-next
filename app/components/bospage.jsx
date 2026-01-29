@@ -109,8 +109,8 @@ const Bospages = () => {
 
                 </div>
               )}
-              <button type="submit" onClick={() => hendleDetail(item.id)}>detail</button>
-              <dialog id="my_modal_4" className="modal">
+              <button type="submit" className="text-white" onClick={() => hendleDetail(item.id)}>detail</button>
+              <dialog id="my_modal_4" className="modal bg-[#0f141a]">
                 <div className="modal-box w-11/12 max-w-5xl">
                   <h3 className="font-bold text-lg py-2">Bos detail</h3>
                   <div className=" w-full h-full">
@@ -131,7 +131,7 @@ const Bospages = () => {
                   <div className="modal-action">
                     <form method="dialog">
                       {/* if there is a button, it will close the modal */}
-                      <button className="btn">Close</button>
+                      <button className="btn btn-primary">Close</button>
                     </form>
                   </div>
                 </div>
