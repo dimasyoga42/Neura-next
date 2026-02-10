@@ -28,6 +28,7 @@ export default function Crud() {
   // Insert state
   const [inputName, setInputName] = useState("");
   const [inputType, setInputType] = useState("");
+  const [inputUpgrade, setinputUpgrade] = useState("")
   const [inputStat, setInputStat] = useState("");
   const [inputRoute, setInputRoute] = useState("");
 
@@ -66,7 +67,7 @@ export default function Crud() {
   };
 
   const handleInsert = async () => {
-    await inputxtall(inputName, inputType, inputStat, inputRoute);
+    await inputxtall(inputName, inputType, inputUpgrade, inputStat, inputRoute);
     document.getElementById("insert_modal").close();
   };
 
@@ -170,6 +171,13 @@ export default function Crud() {
               placeholder="Type"
               value={inputType}
               onChange={(e) => setInputType(e.target.value)}
+            />
+            <input
+              type="text"
+              className="input mx-auto border"
+              placeholder="upgrade"
+              value={inputUpgrade}
+              onChange={(e) => setinputUpgrade(e.target.value)}
             />
             <input
               type="text"

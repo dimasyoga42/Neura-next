@@ -5,6 +5,7 @@ import { supabase } from "../lib/supabase";
 export const usePostStore = create((set) => ({
   xtall: [],
   banner: [],
+  ability: [],
   bos: [],
   bosId: [],
   appview: [],
@@ -67,7 +68,7 @@ export const usePostStore = create((set) => ({
     set({ loading: true, error: null });
     const { data, error } = await supabase
       .from("xtall")
-      .insert([{ name, type, stat, route }])
+      .insert([{ name, type, upgrade, stat, route }])
       .select()
       .single();
     if (error) {
@@ -250,5 +251,18 @@ export const usePostStore = create((set) => ({
       loading: false,
       success: "Berhasil di edit"
     }));
+  },
+  getAbility: async () => {
+    set({ loading: true, error: null })
+    const { data, error } = await supabase.from("ability").select("nama, stat_effect, tier")
+
+    if (error) return set({ error: error.message, loading: false });
+
+    const parseMessage = data.map((item) => ({
+      name: item.nama,
+      tier: item.tier,
+      stat: item.stat_effect
+    }))
+    set({ ability: parseMessage, loading: false })
   }
 }));
