@@ -11,6 +11,7 @@ const Navhome = () => {
         <div className="flex justify-items-center items-center mr-5 gap-2">
           <Link href="/">xtall</Link>
           <Link href="/home">bos</Link>
+          <Link href="/home/ability">ability</Link>
         </div>
       </div>
     </>

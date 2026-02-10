@@ -254,12 +254,12 @@ export const usePostStore = create((set) => ({
   },
   getAbility: async () => {
     set({ loading: true, error: null })
-    const { data, error } = await supabase.from("ability").select("nama, stat_effect, tier")
+    const { data, error } = await supabase.from("ability").select("name, stat_effect, tier")
 
     if (error) return set({ error: error.message, loading: false });
 
     const parseMessage = data.map((item) => ({
-      name: item.nama,
+      name: item.name,
       tier: item.tier,
       stat: item.stat_effect
     }))
