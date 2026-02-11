@@ -37,6 +37,12 @@ const Bospage = () => {
   }
   const handleInsert = async () => {
     await insertBos(name, type, image, location, element, stat);
+    setName("")
+    setType("")
+    setImage("")
+    setLocation("")
+    setElement("")
+    setStat("")
   }
   const handleDelete = async (id) => {
     await deleteBos(id);
